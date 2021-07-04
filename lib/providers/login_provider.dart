@@ -6,7 +6,6 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:get/get.dart';
 
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginProvider extends GetxController {
   late UserModel _user;
@@ -26,6 +25,7 @@ class LoginProvider extends GetxController {
       final LoginResult result = await FacebookAuth.instance.login();
 
       if (result.status == LoginStatus.success) {
+        print(result.status.toString());
         final AccessToken accessToken = result.accessToken!;
 
         final OAuthCredential credential =
@@ -41,6 +41,12 @@ class LoginProvider extends GetxController {
             photoUrl: userCredential.user!.photoURL as String,
             petAdvertiseId: '',
             provider: 'Facebook');
+
+        //adding new user data
+        UserProvider _userProvider = Get.find<UserProvider>();
+        await _userProvider.addUser(userData);
+
+        Get.snackbar('Logged in successfully', '');
         return true;
       }
       return false;
@@ -57,6 +63,10 @@ class LoginProvider extends GetxController {
   Future<bool> logoutFacebook() async {
     try {
       await FacebookAuth.instance.logOut();
+
+      await FirebaseAuth.instance.signOut();
+
+      Get.offAll(() => LoginScreen());
 
       return true;
     } catch (PlatFormException) {

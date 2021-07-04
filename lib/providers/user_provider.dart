@@ -1,13 +1,8 @@
 import 'package:floof/core/models/user_model.dart';
-import 'package:floof/providers/login_provider.dart';
 import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserProvider extends GetxController {
-  LoginProvider _loginProvider = Get.find<LoginProvider>();
-
-  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-
   CollectionReference _userCollection =
       FirebaseFirestore.instance.collection('user');
 

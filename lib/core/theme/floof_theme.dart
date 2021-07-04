@@ -33,7 +33,7 @@ class FloofTheme {
       headline2: TextStyle(
           color: PRIMARY_COLOR, fontSize: 18, fontWeight: FontWeight.w300),
       headline1: TextStyle(
-          color: PRIMARY_COLOR, fontSize: 33, fontWeight: FontWeight.w700),
+          color: FONT_DARK_COLOR, fontSize: 34, fontWeight: FontWeight.w800),
     ),
   );
 }
