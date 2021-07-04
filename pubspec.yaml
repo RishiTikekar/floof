@@ -1,0 +1,59 @@
+name: floof
+description: A new Flutter project.
+
+publish_to: "none"
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+
+  #state management
+  get: ^4.1.4
+
+  #initializing firebase
+  firebase_core: ^1.3.0
+
+  #facebook login
+  flutter_facebook_auth: ^3.5.0
+
+  #firebase authentication
+  firebase_auth: ^2.0.0
+
+  #google sign in
+  google_sign_in: ^5.0.4
+
+  #cloud firestore db
+  cloud_firestore: ^2.3.0
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/onBoarding/
+    - assets/images/vector/
+    - assets/images/
+
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Nunito-ExtraBold.ttf
+          weight: 900
+        - asset: assets/fonts/Nunito-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Nunito-SemiBold.ttf
+          weight: 500
+  #

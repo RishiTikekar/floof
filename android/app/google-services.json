@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "159258161927",
+    "project_id": "floop-f1a73",
+    "storage_bucket": "floop-f1a73.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:159258161927:android:0d77c7fbc1d89fb0a5cba2",
+        "android_client_info": {
+          "package_name": "com.example.floof"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "159258161927-nin4vggksecl5lg5fa9v7e17vms0667l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATfujgGW9ybgknP6gtgXu2uPluuRlGNCA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "159258161927-nin4vggksecl5lg5fa9v7e17vms0667l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
