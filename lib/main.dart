@@ -17,10 +17,19 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      theme: FloofTheme.mytheme,
-      title: 'floof',
-      home: OnBoardingScreen(),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode _currentFocus = FocusScope.of(context);
+        if (!_currentFocus.hasPrimaryFocus &&
+            _currentFocus.focusedChild != null) {
+          _currentFocus.focusedChild!.unfocus();
+        }
+      },
+      child: GetMaterialApp(
+        theme: FloofTheme.mytheme,
+        title: 'floof',
+        home: OnBoardingScreen(),
+      ),
     );
   }
 }

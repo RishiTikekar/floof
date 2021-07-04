@@ -6,7 +6,7 @@ class FloofTheme {
   static const Color FONT_DARK_COLOR = Color(0xFF120e0b);
   static const Color FONT_LIGHT_COLOR = Color(0XFFda943a);
   static const Color COLOR4 = Color(0xFF8f7b8c);
-  static const Color COLOR5 = Color(0xFF62412e);
+  static const Color COLOR5 = Color(0xFFf6931b);
   static const Color COLOR6 = Color(0xFFab641f);
   static const Color COLOR7 = Color(0xFFb6702e);
 
@@ -28,12 +28,16 @@ class FloofTheme {
     textTheme: TextTheme(
       bodyText1: TextStyle(
           color: FONT_DARK_COLOR, fontSize: 30, fontWeight: FontWeight.w700),
-      bodyText2:
-          TextStyle(color: COLOR4, fontSize: 18, fontWeight: FontWeight.w300),
-      headline2: TextStyle(
-          color: PRIMARY_COLOR, fontSize: 18, fontWeight: FontWeight.w300),
+      bodyText2: TextStyle(
+          color: FONT_DARK_COLOR, fontSize: 18, fontWeight: FontWeight.w600),
       headline1: TextStyle(
           color: FONT_DARK_COLOR, fontSize: 34, fontWeight: FontWeight.w800),
+      headline2: TextStyle(
+          color: PRIMARY_COLOR, fontSize: 18, fontWeight: FontWeight.w300),
+      headline3: TextStyle(
+          color: FONT_DARK_COLOR, fontSize: 24, fontWeight: FontWeight.w700),
+      headline4: TextStyle(
+          color: Colors.grey, fontSize: 16, fontWeight: FontWeight.w300),
     ),
   );
 }

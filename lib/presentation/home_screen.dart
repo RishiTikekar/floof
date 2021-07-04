@@ -1,6 +1,8 @@
 import 'package:floof/core/models/pet_model.dart';
 import 'package:floof/core/theme/floof_theme.dart';
+import 'package:floof/presentation/pet_details_screen.dart';
 import 'package:floof/providers/login_provider.dart';
+import 'package:floof/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -12,18 +14,25 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final LoginProvider loginProvider = Get.find<LoginProvider>();
 //testing purpose data
-  List<String> categories = ['Dog', 'Cat', 'Fishes', 'Hamster', 'Other'];
+  List<String> categories = ['Dog', 'Cat', 'Fish', 'Hamster', 'Other'];
 
   late String selectedCategory = 'Dog';
 
   List<PetModel> petList = [
     PetModel(
         name: 'Tomya',
+        geneder: 'Male',
         id: '1',
         age: 7,
-        breed: 'Labrador',
+        breed: 'Vodaphone cha kutra',
         category: 'Dog',
         ownerId: '220',
+        images: [
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRm48SyQFkfDroxQZ5mgiJO0LplBlXdwG3A2w&usqp=CAU',
+          'https://thumbs.dreamstime.com/b/group-pets-kitten-puppy-raw-isolated-white-41268955.jpg',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBwghTLclKJqu2Uci3eqXHqNKsW-B83KO7uA&usqp=CAU',
+          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmSCdfvxccsJ5RRwfCtzTHT2gaPP2FVlRowg&usqp=CAU'
+        ],
         description:
             'amch moti kutra london la gela suite boot ghalun saheb banun ala')
   ];
@@ -33,41 +42,70 @@ class _HomeScreenState extends State<HomeScreen> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          if (loginProvider.userData.provider == "Google") {
-            await loginProvider.signOutGoogle();
-          } else {
-            await loginProvider.logoutFacebook();
-          }
-        },
-        child: Icon(Icons.person),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () async {
+      //     if (loginProvider.userData.provider == "Google") {
+      //       await loginProvider.signOutGoogle();
+      //     } else {
+      //       await loginProvider.logoutFacebook();
+      //     }
+      //   },
+      //   child: Icon(Icons.person),
+      // ),
+      appBar: AppBar(
+        elevation: 0,
+        leading: IconButton(
+          onPressed: () {},
+          icon: Icon(Icons.menu),
+        ),
+        title: Text.rich(
+          TextSpan(children: [
+            TextSpan(
+              text: 'Search',
+              style: Theme.of(context).textTheme.headline1,
+            ),
+            TextSpan(
+                text: ' Friend',
+                style: TextStyle(
+                  fontSize: 34,
+                  fontWeight: FontWeight.w800,
+                  fontFamily: 'Nunito',
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 2
+                    ..color = FloofTheme.FONT_DARK_COLOR,
+                ))
+          ]),
+        ),
+        actions: [
+          CircleAvatar(
+            maxRadius: 35,
+            backgroundImage: NetworkImage(
+              loginProvider.userData.photoUrl,
+            ),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          // mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: size.height * 0.02),
-            Text.rich(
-              TextSpan(children: [
-                TextSpan(
-                  text: 'Search',
-                  style: Theme.of(context).textTheme.headline1,
-                ),
-                TextSpan(
-                    text: ' Friend',
-                    style: TextStyle(
-                      fontSize: 34,
-                      fontWeight: FontWeight.w800,
-                      fontFamily: 'Nunito',
-                      foreground: Paint()
-                        ..style = PaintingStyle.stroke
-                        ..strokeWidth = 2
-                        ..color = FloofTheme.FONT_DARK_COLOR,
-                    ))
-              ]),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Row(
+                children: [
+                  IconButton(
+                      onPressed: () {},
+                      iconSize: 20,
+                      icon: Icon(Icons.location_on)),
+                  Text(
+                    "India",
+                    style: Theme.of(context).textTheme.headline3,
+                  )
+                ],
+              ),
             ),
             TextField(
               decoration: InputDecoration(
@@ -81,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             catgoriesWidget(size: size),
-            petListWidget()
+            petListWidget(size: size)
           ],
         ),
       ),
@@ -108,7 +146,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     shape: BoxShape.circle,
                     boxShadow: [BoxShadow(blurRadius: 3, color: Colors.grey)],
                     color: selectedCategory == currentCategory
-                        ? FloofTheme.FONT_DARK_COLOR
+                        ? FloofTheme.COLOR5
+                        // FloofTheme.FONT_DARK_COLOR
                         : FloofTheme.PRIMARY_COLOR,
                   ),
                   child: FittedBox(
@@ -117,6 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       currentCategory,
                       style: Theme.of(context).textTheme.headline2!.copyWith(
                             fontSize: 18,
+                            fontWeight: FontWeight.w400,
                             color: selectedCategory == currentCategory
                                 ? FloofTheme.PRIMARY_COLOR
                                 : FloofTheme.FONT_DARK_COLOR,
@@ -130,11 +170,81 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Expanded petListWidget() {
+  Expanded petListWidget({required Size size}) {
     return Expanded(
       child: ListView(
           children: petList.map((currentPet) {
-        return Container();
+        return InkWell(
+          onTap: () => Get.to(() => PetDetailsScreen()),
+          child: Container(
+            height: 200,
+            width: double.infinity,
+            margin: EdgeInsets.symmetric(horizontal: 4),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [BoxShadow(blurRadius: 3, color: Colors.grey)],
+                color: FloofTheme.PRIMARY_COLOR),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    margin: EdgeInsets.all(7),
+                    height: double.infinity,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.network(
+                        currentPet.images[0],
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                // Spacer(),
+                Expanded(
+                    flex: 3,
+                    child: Container(
+                      padding: EdgeInsets.only(right: 0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Row(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  currentPet.name,
+                                  style: Theme.of(context).textTheme.headline3,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              Spacer(),
+                              IconButton(
+                                onPressed: () {},
+                                icon: Icon(
+                                  Icons.favorite,
+                                  size: 35,
+                                ),
+                              )
+                            ],
+                          ),
+                          Text(
+                            currentPet.breed,
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
+                          Text(
+                            currentPet.age.toString() + " years old",
+                            style: Theme.of(context).textTheme.headline4,
+                          )
+                        ],
+                      ),
+                    ))
+              ],
+            ),
+          ),
+        );
       }).toList()),
     );
   }

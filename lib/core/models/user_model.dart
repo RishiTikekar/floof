@@ -5,6 +5,7 @@ class UserModel {
   late String photoUrl;
   late String provider;
   late String petAdvertiseId;
+  // late List<String> favouritList=[];
   UserModel(
       {required this.userId,
       required this.email,
