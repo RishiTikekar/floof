@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 class LoginScreen extends StatelessWidget {
   final LoginProvider loginProvider = Get.find<LoginProvider>();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

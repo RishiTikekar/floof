@@ -1,5 +1,7 @@
 import 'package:floof/core/models/pet_model.dart';
+import 'package:floof/core/theme/assets.dart';
 import 'package:floof/core/theme/floof_theme.dart';
+import 'package:floof/presentation/add_pet_screen.dart';
 import 'package:floof/presentation/pet_details_screen.dart';
 import 'package:floof/providers/login_provider.dart';
 import 'package:floof/providers/user_provider.dart';
@@ -34,24 +36,37 @@ class _HomeScreenState extends State<HomeScreen> {
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmSCdfvxccsJ5RRwfCtzTHT2gaPP2FVlRowg&usqp=CAU'
         ],
         description:
-            'amch moti kutra london la gela suite boot ghalun saheb banun ala')
+            'amch moti kutra london la gela suite boot ghalun saheb banun ala',
+        lat: 0.0,
+        long: 0.0)
   ];
+
+  final UserProvider userProvider = Get.find<UserProvider>();
+  @override
+  void initState() {
+    userProvider.getUserLocation();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () async {
-      //     if (loginProvider.userData.provider == "Google") {
-      //       await loginProvider.signOutGoogle();
-      //     } else {
-      //       await loginProvider.logoutFacebook();
-      //     }
-      //   },
-      //   child: Icon(Icons.person),
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          // if (loginProvider.userData.provider == "Google") {
+          //   await loginProvider.signOutGoogle();
+          // } else {
+          //   await loginProvider.logoutFacebook();
+          // }
+          Get.to(() => AddPetScreen(size: size));
+        },
+        child: ImageIcon(
+          AssetImage(Assets.PAWVECTOR),
+          size: 28,
+        ),
+      ),
       appBar: AppBar(
         elevation: 0,
         leading: IconButton(
@@ -92,21 +107,28 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
-              child: Row(
-                children: [
-                  IconButton(
-                      onPressed: () {},
-                      iconSize: 20,
-                      icon: Icon(Icons.location_on)),
-                  Text(
-                    "India",
-                    style: Theme.of(context).textTheme.headline3,
-                  )
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 8),
+            //   child: Row(
+            //     children: [
+            //       IconButton(
+            //           onPressed: () {},
+            //           iconSize: 20,
+            //           icon: Icon(Icons.location_on)),
+            //       Text(
+            //         // _userProvider.locationData == null
+            //         //     ? ""
+            //         //     : _userProvider.locationData.latitude.toString() +
+            //         //         " Lat, " +
+            //         //         _userProvider.locationData.longitude.toString() +
+            //         //         " Lng",
+            //         "",
+            //         style: Theme.of(context).textTheme.headline3,
+            //       )
+            //     ],
+            //   ),
+            // ),
+
             TextField(
               decoration: InputDecoration(
                 hintText: 'Search',
@@ -144,7 +166,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 70,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    boxShadow: [BoxShadow(blurRadius: 3, color: Colors.grey)],
+                    boxShadow: [BoxShadow(blurRadius: 4, color: Colors.grey)],
                     color: selectedCategory == currentCategory
                         ? FloofTheme.COLOR5
                         // FloofTheme.FONT_DARK_COLOR
@@ -156,7 +178,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       currentCategory,
                       style: Theme.of(context).textTheme.headline2!.copyWith(
                             fontSize: 18,
-                            fontWeight: FontWeight.w400,
+                            fontWeight: FontWeight.w600,
                             color: selectedCategory == currentCategory
                                 ? FloofTheme.PRIMARY_COLOR
                                 : FloofTheme.FONT_DARK_COLOR,
@@ -174,75 +196,88 @@ class _HomeScreenState extends State<HomeScreen> {
     return Expanded(
       child: ListView(
           children: petList.map((currentPet) {
-        return InkWell(
-          onTap: () => Get.to(() => PetDetailsScreen()),
-          child: Container(
-            height: 200,
-            width: double.infinity,
-            margin: EdgeInsets.symmetric(horizontal: 4),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: [BoxShadow(blurRadius: 3, color: Colors.grey)],
-                color: FloofTheme.PRIMARY_COLOR),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Container(
-                    margin: EdgeInsets.all(7),
-                    height: double.infinity,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: Image.network(
-                        currentPet.images[0],
-                        fit: BoxFit.cover,
-                      ),
+        return Container(
+          height: 170,
+          width: double.infinity,
+          margin: EdgeInsets.symmetric(horizontal: 4),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [BoxShadow(blurRadius: 4, color: Colors.grey)],
+              color: FloofTheme.PRIMARY_COLOR),
+          child: Row(
+            mainAxisSize: MainAxisSize.max,
+            children: [
+              Expanded(
+                flex: 2,
+                child: Container(
+                  margin: EdgeInsets.all(7),
+                  decoration: BoxDecoration(
+                    boxShadow: [BoxShadow(blurRadius: 4, color: Colors.grey)],
+                  ),
+                  height: double.infinity,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10),
+                    child: Image.network(
+                      currentPet.images[0],
+                      fit: BoxFit.cover,
                     ),
                   ),
                 ),
-                // Spacer(),
-                Expanded(
-                    flex: 3,
-                    child: Container(
-                      padding: EdgeInsets.only(right: 0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              ),
+              // Spacer(),
+              Expanded(
+                flex: 3,
+                child: Container(
+                  padding: EdgeInsets.only(right: 0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Row(
+                        mainAxisSize: MainAxisSize.max,
                         children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  currentPet.name,
-                                  style: Theme.of(context).textTheme.headline3,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                              ),
-                              Spacer(),
-                              IconButton(
-                                onPressed: () {},
-                                icon: Icon(
-                                  Icons.favorite,
-                                  size: 35,
-                                ),
-                              )
-                            ],
+                          Flexible(
+                            child: Text(
+                              currentPet.name,
+                              style: Theme.of(context).textTheme.headline3,
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
-                          Text(
-                            currentPet.breed,
-                            style: Theme.of(context).textTheme.bodyText2,
-                          ),
-                          Text(
-                            currentPet.age.toString() + " years old",
-                            style: Theme.of(context).textTheme.headline4,
+                          Spacer(),
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.favorite,
+                              size: 35,
+                            ),
                           )
                         ],
                       ),
-                    ))
-              ],
-            ),
+                      Text(
+                        currentPet.breed,
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                      Text(
+                        currentPet.age.toString() + " years old",
+                        style: Theme.of(context).textTheme.headline4,
+                      ),
+                      ElevatedButton(
+                        onPressed: () => Get.to(() => PetDetailsScreen()),
+                        child: Text(
+                          "Show Details",
+                          style: Theme.of(context).textTheme.bodyText2,
+                        ),
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              FloofTheme.COLOR5),
+                          // shape: MaterialStateProperty.all()
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              )
+            ],
           ),
         );
       }).toList()),

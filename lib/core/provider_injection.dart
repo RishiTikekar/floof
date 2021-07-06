@@ -1,4 +1,5 @@
 import 'package:floof/providers/login_provider.dart';
+import 'package:floof/providers/pet_provider.dart';
 import 'package:floof/providers/user_provider.dart';
 import 'package:get/get.dart';
 
@@ -10,4 +11,8 @@ void initProvider() {
   //User provider injection
   // ignore: unused_local_variable
   UserProvider _userProvider = Get.put(UserProvider());
+
+  //pet provider
+  // ignore: unused_local_variable
+  PetProvider _petProvider = Get.put(PetProvider());
 }

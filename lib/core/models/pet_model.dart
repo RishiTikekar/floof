@@ -8,6 +8,8 @@ class PetModel {
   late int age;
   late List<String> images = [];
   late String geneder;
+  late double lat;
+  late double long;
 
   PetModel(
       {required this.name,
@@ -18,7 +20,9 @@ class PetModel {
       required this.ownerId,
       required this.description,
       required this.images,
-      required this.geneder});
+      required this.geneder,
+      required this.lat,
+      required this.long});
 
   factory PetModel.fromJson(Map<String, dynamic> data, String id) {
     assert(data.isEmpty, 'Pet Data cannot be null!');
@@ -31,7 +35,9 @@ class PetModel {
         ownerId: data['ownerId'],
         description: data['description'],
         images: data['images'],
-        geneder: data['gender']);
+        geneder: data['gender'],
+        lat: data['lat'],
+        long: data['long']);
   }
 
   Map<String, dynamic> toJson(PetModel petData) {
@@ -43,10 +49,10 @@ class PetModel {
       'category': petData.category,
       'ownerId': petData.ownerId,
       'description': petData.description,
-      'gender': petData.geneder
+      'gender': petData.geneder,
+      'images': petData.images,
+      'lat': petData.lat,
+      'long': petData.long
     };
   }
-  // List<String> getImageList(){
-  //   return
-  // }
 }

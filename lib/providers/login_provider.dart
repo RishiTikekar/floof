@@ -39,8 +39,11 @@ class LoginProvider extends GetxController {
             email: userCredential.user!.email as String,
             name: userCredential.user!.displayName as String,
             photoUrl: userCredential.user!.photoURL as String,
+            lat: 0.0,
+            long: 0.0,
             petAdvertiseId: '',
-            provider: 'Facebook');
+            provider: 'Facebook',
+            favouritList: []);
 
         //adding new user data
         UserProvider _userProvider = Get.find<UserProvider>();
@@ -102,7 +105,10 @@ class LoginProvider extends GetxController {
             email: userCredential.user!.email as String,
             name: userCredential.user!.displayName as String,
             photoUrl: userCredential.user!.photoURL as String,
+            lat: 0.0,
+            long: 0.0,
             petAdvertiseId: '',
+            favouritList: [],
             provider: 'Google');
       }
       //adding new user data to database
