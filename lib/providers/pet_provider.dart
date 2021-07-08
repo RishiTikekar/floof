@@ -6,18 +6,17 @@ import 'package:floof/providers/storage_service.dart';
 import 'package:get/get.dart';
 
 class PetProvider extends GetxController {
-  CollectionReference _petCollection =
-      FirebaseFirestore.instance.collection('pet');
   Future<void> addPetForAdoption(PetModel petModel, List<File> files) async {
     try {
       CollectionReference reference =
-          _petCollection.doc(petModel.category).collection(petModel.breed);
+          FirebaseFirestore.instance.collection(petModel.category);
 
       reference.add(petModel.toJson(petModel)).then((value) {
-        StorageService()
-          ..uploadFiles(files, value.id).then((list) {
-            reference.doc(value.id).update({'images': list, 'id': value.id});
-          });
+        StorageService service = StorageService();
+        service.uploadFiles(files, value.id).then((list) {
+          print(list);
+          reference.doc(value.id).update({'images': list, 'id': value.id});
+        });
       });
 
       // reference.

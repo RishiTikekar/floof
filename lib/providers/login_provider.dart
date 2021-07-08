@@ -108,7 +108,7 @@ class LoginProvider extends GetxController {
             lat: 0.0,
             long: 0.0,
             petAdvertiseId: '',
-            favouritList: [],
+            favouritList: ['x', 'y', 'z'],
             provider: 'Google');
       }
       //adding new user data to database

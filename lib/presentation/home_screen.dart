@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:floof/core/models/pet_model.dart';
 import 'package:floof/core/theme/assets.dart';
 import 'package:floof/core/theme/floof_theme.dart';
 import 'package:floof/presentation/add_pet_screen.dart';
 import 'package:floof/presentation/pet_details_screen.dart';
 import 'package:floof/providers/login_provider.dart';
+import 'package:floof/providers/storage_service.dart';
 import 'package:floof/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -55,12 +58,15 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          // if (loginProvider.userData.provider == "Google") {
-          //   await loginProvider.signOutGoogle();
-          // } else {
-          //   await loginProvider.logoutFacebook();
-          // }
-          Get.to(() => AddPetScreen(size: size));
+          // Get.to(() => AddPetScreen(size: size));
+          // StorageService..uploadFiles();
+          StorageService service = StorageService();
+          // List<String> list = await service.uploadFiles(
+          //     [File(Assets.DOGVECTOR), File(Assets.GOLDENRETRIEVER)], '1');
+          // print(list);
+          String out =
+              await service.uploadSingleFile(File(Assets.DOGVECTOR), '1', 1);
+          print(out);
         },
         child: ImageIcon(
           AssetImage(Assets.PAWVECTOR),

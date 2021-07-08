@@ -306,9 +306,13 @@ class _AddPetScreenState extends State<AddPetScreen> {
 
   Future<void> addPetForAdoption() async {
     bool validate = _formKey.currentState!.validate();
-    if (validate && _selectedBreed != '' && _selectedCategory != '') {
+    if (validate &&
+        _selectedBreed != '' &&
+        _selectedCategory != '' &&
+        images.length != 0) {
       _formKey.currentState!.save();
-
+      print(images);
+      print("*************");
       //creating new instance of petmodel
       PetModel newPet = PetModel(
         name: petName,
@@ -318,7 +322,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
         category: _selectedCategory,
         ownerId: _loginProvider.userData.userId,
         description: description,
-        images: [],
+        images: ['1', '2'],
         geneder: _radioSelected == 0 ? 'Male' : 'Female',
         lat: _userProvider.locationData.latitude!,
         long: _userProvider.locationData.longitude!,
@@ -330,6 +334,8 @@ class _AddPetScreenState extends State<AddPetScreen> {
       Get.snackbar('Error', 'Select appropriate breed');
     } else if (_selectedCategory == '') {
       Get.snackbar('Error', 'Select appropriate category');
+    } else if (images.length == 0) {
+      print("images not recieved");
     }
   }
 }
